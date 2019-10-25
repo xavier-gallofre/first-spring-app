@@ -1,30 +1,28 @@
 package es.xgani.firstSpringApp.controller;
 
 import es.xgani.firstSpringApp.domain.User;
-import es.xgani.firstSpringApp.repository.UserRepository;
+import es.xgani.firstSpringApp.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 public class UserRestController {
 
-    private final UserRepository repository;
-
-    public UserRestController(UserRepository repository) {
-        this.repository = repository;
-    }
+    private final UserService userService;
 
     @GetMapping("/users")
     List<User> list() {
-        return repository.findAll();
+        return userService.findAll();
     }
 
     @GetMapping("/users/{id}")
     User show(@PathVariable Integer id) {
-        return repository.findById(id).orElse(null);
+        return userService.findById(id);
     }
 
 }
