@@ -20,8 +20,15 @@ class UserRestControllerTest {
     private UserService userService;
 
     @Test
-    void whenAskSomethingThatExists_thenIsOk() throws Exception {
+    void whenGetAllUsers_thenIsOk() throws Exception {
         mockMvc.perform(get("/users")
+                .contentType("application/json"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void whenGetAnSpecificUser_thenIsOk() throws Exception {
+        mockMvc.perform(get("/users/{id}", 1)
                 .contentType("application/json"))
                 .andExpect(status().isOk());
     }

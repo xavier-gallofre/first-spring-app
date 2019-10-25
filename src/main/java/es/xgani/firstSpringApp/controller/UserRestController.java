@@ -1,6 +1,6 @@
 package es.xgani.firstSpringApp.controller;
 
-import es.xgani.firstSpringApp.domain.User;
+import es.xgani.firstSpringApp.dto.model.UserDto;
 import es.xgani.firstSpringApp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,12 +16,12 @@ public class UserRestController {
     private final UserService userService;
 
     @GetMapping("/users")
-    List<User> list() {
+    List<UserDto> list() {
         return userService.findAll();
     }
 
     @GetMapping("/users/{id}")
-    User show(@PathVariable Integer id) {
+    UserDto show(@PathVariable Integer id) {
         return userService.findById(id);
     }
 
