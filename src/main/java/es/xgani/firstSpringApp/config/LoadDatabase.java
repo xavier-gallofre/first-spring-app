@@ -1,4 +1,4 @@
-package es.xgani.firstSpringApp;
+package es.xgani.firstSpringApp.config;
 
 import es.xgani.firstSpringApp.domain.User;
 import es.xgani.firstSpringApp.repository.UserRepository;
