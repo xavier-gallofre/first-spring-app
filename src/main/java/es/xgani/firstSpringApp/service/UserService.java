@@ -30,4 +30,11 @@ public class UserService {
         User user = repository.findById(id).orElse(null);
         return user != null ? UserMapper.toUserDto(user) : null;
     }
+
+    public UserDto create(UserDto userDto) {
+        User user = new User()
+                .setName(userDto.getName())
+                .setBirthdate(userDto.getBirthdate());
+        return UserMapper.toUserDto(repository.save(user));
+    }
 }
