@@ -3,6 +3,7 @@ package es.xgani.firstSpringApp.controller.api;
 import es.xgani.firstSpringApp.controller.request.UserRequest;
 import es.xgani.firstSpringApp.dto.model.UserDto;
 import es.xgani.firstSpringApp.service.UserService;
+import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class UserRestController {
     }
 
     @GetMapping("/users/{id}")
-    UserDto show(@PathVariable Integer id) {
+    UserDto show(@PathVariable Integer id) throws NotFoundException {
         return userService.findById(id);
     }
 
@@ -33,5 +34,10 @@ public class UserRestController {
                 .setBirthdate(userRequest.getBirthdate());
 
         return userService.create(userDto);
+    }
+
+    @DeleteMapping("/users/{id}")
+    void delete(@PathVariable Integer id) {
+        userService.delete(id);
     }
 }

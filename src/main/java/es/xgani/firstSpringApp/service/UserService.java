@@ -4,6 +4,7 @@ import es.xgani.firstSpringApp.domain.User;
 import es.xgani.firstSpringApp.dto.mapper.UserMapper;
 import es.xgani.firstSpringApp.dto.model.UserDto;
 import es.xgani.firstSpringApp.repository.UserRepository;
+import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +27,8 @@ public class UserService {
         return userDtos;
     }
 
-    public UserDto findById(Integer id) {
-        User user = repository.findById(id).orElse(null);
+    public UserDto findById(Integer id) throws NotFoundException {
+        User user = repository.findById(id).orElseThrow(() -> new NotFoundException(id.toString()));
         return user != null ? UserMapper.toUserDto(user) : null;
     }
 
@@ -36,5 +37,9 @@ public class UserService {
                 .setName(userDto.getName())
                 .setBirthdate(userDto.getBirthdate());
         return UserMapper.toUserDto(repository.save(user));
+    }
+
+    public void delete(Integer id) {
+        repository.deleteById(id);
     }
 }
