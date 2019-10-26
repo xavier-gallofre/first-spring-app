@@ -1,5 +1,6 @@
 package es.xgani.firstSpringApp.dto.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -11,5 +12,6 @@ public class UserDto {
 
     private Integer id;
     private String name;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private Date birthdate;
 }
