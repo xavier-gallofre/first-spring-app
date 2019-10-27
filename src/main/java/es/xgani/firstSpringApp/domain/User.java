@@ -6,6 +6,8 @@ import lombok.experimental.Accessors;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
@@ -13,10 +15,14 @@ import java.util.Date;
 @Accessors(chain = true)
 public class User {
 
-    private @Id
+    @Id
     @GeneratedValue
-    Integer id; // database entity
+    private Integer id; // database entity
+
+    @NotBlank(message = "Name is mandatory")
     private String name;
+
+    @NotNull(message = "Birthdate is mandatory")
     private Date birthdate;
 
     public User() {
