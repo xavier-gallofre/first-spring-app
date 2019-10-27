@@ -1,10 +1,12 @@
 package es.xgani.firstSpringApp.controller.api;
 
 import es.xgani.firstSpringApp.controller.request.UserRequest;
+import es.xgani.firstSpringApp.controller.resourceAssembler.UserResourceAssembler;
 import es.xgani.firstSpringApp.dto.model.UserDto;
 import es.xgani.firstSpringApp.service.UserService;
-import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,33 +18,39 @@ public class UserRestController {
 
     private final UserService userService;
 
+    private final UserResourceAssembler assembler;
+
     @GetMapping("/users")
-    List<UserDto> list() {
-        return userService.findAll();
+    public CollectionModel<EntityModel<UserDto>> list() {
+        List<UserDto> users = userService.findAll();
+        return assembler.toCollectionModel(users);
     }
 
     @GetMapping("/users/{id}")
-    UserDto show(@PathVariable Integer id) throws NotFoundException {
-        return userService.findById(id);
+    public EntityModel<UserDto> show(@PathVariable Integer id) {
+        UserDto user = userService.findById(id);
+        return assembler.toModel(user);
     }
 
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
-    UserDto create(@RequestBody UserRequest userRequest) {
+    public EntityModel<UserDto> create(@RequestBody UserRequest userRequest) {
         UserDto userDto = new UserDto()
                 .setName(userRequest.getName())
                 .setBirthdate(userRequest.getBirthdate());
 
-        return userService.create(userDto);
+        UserDto user = userService.create(userDto);
+        return assembler.toModel(user);
     }
 
     @PutMapping("/users/{id}")
-    UserDto replace(@PathVariable Integer id, @RequestBody UserRequest userRequest) {
+    public EntityModel<UserDto> replace(@PathVariable Integer id, @RequestBody UserRequest userRequest) {
         UserDto userDto = new UserDto()
                 .setName(userRequest.getName())
                 .setBirthdate(userRequest.getBirthdate());
 
-        return userService.replace(id, userDto);
+        UserDto user = userService.replace(id, userDto);
+        return assembler.toModel(user);
     }
 
     @DeleteMapping("/users/{id}")

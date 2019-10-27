@@ -3,6 +3,7 @@ package es.xgani.firstSpringApp.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import es.xgani.firstSpringApp.controller.api.UserRestController;
 import es.xgani.firstSpringApp.controller.request.UserRequest;
+import es.xgani.firstSpringApp.controller.resourceAssembler.UserResourceAssembler;
 import es.xgani.firstSpringApp.exception.UserNotFoundException;
 import es.xgani.firstSpringApp.service.UserService;
 import es.xgani.firstSpringApp.util.DateUtils;
@@ -30,6 +31,9 @@ class UserRestControllerTest {
 
     @MockBean
     private UserService userService;
+
+    @MockBean
+    private UserResourceAssembler userResourceAssembler;
 
     @Test
     void whenGetAllUsers_thenIsOk() throws Exception {
