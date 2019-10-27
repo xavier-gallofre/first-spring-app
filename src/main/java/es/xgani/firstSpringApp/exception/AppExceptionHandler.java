@@ -19,6 +19,12 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponseEntity(apiError);
     }
 
+    @ExceptionHandler(UserNotFoundException.class)
+    public final ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException unfe) {
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, "Entity not found", unfe);
+        return buildResponseEntity(apiError);
+    }
+
     @ExceptionHandler(EmptyResultDataAccessException.class)
     public final ResponseEntity<Object> handleEmptyResultDataAccessException(EmptyResultDataAccessException erdae) {
         ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, erdae);

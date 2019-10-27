@@ -36,6 +36,15 @@ public class UserRestController {
         return userService.create(userDto);
     }
 
+    @PutMapping("/users/{id}")
+    UserDto replace(@PathVariable Integer id, @RequestBody UserRequest userRequest) {
+        UserDto userDto = new UserDto()
+                .setName(userRequest.getName())
+                .setBirthdate(userRequest.getBirthdate());
+
+        return userService.replace(id, userDto);
+    }
+
     @DeleteMapping("/users/{id}")
     void delete(@PathVariable Integer id) {
         userService.delete(id);
