@@ -47,7 +47,6 @@ class UserRestControllerTest {
                 .andExpect(status().isOk());
     }
 
-
     @Test
     void whenCreateAnUser_thenIsCreated() throws Exception {
         UserRequest userRequest = new UserRequest()
@@ -59,7 +58,6 @@ class UserRestControllerTest {
                 .content(objectMapper.writeValueAsString(userRequest)))
                 .andExpect(status().isCreated());
     }
-
 
     @Test
     void whenReplaceOnCollection_thenMethodIsNotAllowed() throws Exception {
@@ -110,7 +108,6 @@ class UserRestControllerTest {
         mockMvc.perform(delete("/users/{id}", 1))
                 .andExpect(status().isNotFound());
     }
-
 
     @Test
     void whenAskSomethingThatNotExists_thenIsNotFound() throws Exception {

@@ -10,6 +10,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -34,7 +35,7 @@ public class UserRestController {
 
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
-    public EntityModel<UserDto> create(@RequestBody UserRequest userRequest) {
+    public EntityModel<UserDto> create(@Valid @RequestBody UserRequest userRequest) {
         UserDto userDto = new UserDto()
                 .setName(userRequest.getName())
                 .setBirthdate(userRequest.getBirthdate());
@@ -44,7 +45,7 @@ public class UserRestController {
     }
 
     @PutMapping("/users/{id}")
-    public EntityModel<UserDto> replace(@PathVariable Integer id, @RequestBody UserRequest userRequest) {
+    public EntityModel<UserDto> replace(@PathVariable Integer id, @Valid @RequestBody UserRequest userRequest) {
         UserDto userDto = new UserDto()
                 .setName(userRequest.getName())
                 .setBirthdate(userRequest.getBirthdate());

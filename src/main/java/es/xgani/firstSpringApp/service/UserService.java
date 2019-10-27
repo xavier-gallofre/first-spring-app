@@ -29,7 +29,7 @@ public class UserService {
 
     public UserDto findById(Integer id) {
         User user = repository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
-        return user != null ? UserMapper.toUserDto(user) : null;
+        return UserMapper.toUserDto(user);
     }
 
     public UserDto create(UserDto userDto) {
