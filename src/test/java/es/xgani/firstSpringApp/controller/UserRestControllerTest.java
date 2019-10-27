@@ -1,7 +1,7 @@
 package es.xgani.firstSpringApp.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import es.xgani.firstSpringApp.controller.api.UserRestController;
+import es.xgani.firstSpringApp.controller.api.v1.UserRestController;
 import es.xgani.firstSpringApp.controller.request.UserRequest;
 import es.xgani.firstSpringApp.controller.resourceAssembler.UserResourceAssembler;
 import es.xgani.firstSpringApp.exception.UserNotFoundException;
@@ -37,13 +37,13 @@ class UserRestControllerTest {
 
     @Test
     void whenGetAllUsers_thenIsOk() throws Exception {
-        mockMvc.perform(get("/users"))
+        mockMvc.perform(get("/api/v1/users"))
                 .andExpect(status().isOk());
     }
 
     @Test
     void whenGetASpecificUser_thenIsOk() throws Exception {
-        mockMvc.perform(get("/users/{id}", 1))
+        mockMvc.perform(get("/api/v1/users/{id}", 1))
                 .andExpect(status().isOk());
     }
 
@@ -53,7 +53,7 @@ class UserRestControllerTest {
                 .setName("Xavi")
                 .setBirthdate(DateUtils.parse("03/04/1988"));
 
-        mockMvc.perform(post("/users")
+        mockMvc.perform(post("/api/v1/users")
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(userRequest)))
                 .andExpect(status().isCreated());
@@ -61,7 +61,7 @@ class UserRestControllerTest {
 
     @Test
     void whenReplaceOnCollection_thenMethodIsNotAllowed() throws Exception {
-        mockMvc.perform(put("/users"))
+        mockMvc.perform(put("/api/v1/users"))
                 .andExpect(status().isMethodNotAllowed());
     }
 
@@ -71,7 +71,7 @@ class UserRestControllerTest {
                 .setName("Xavi")
                 .setBirthdate(DateUtils.parse("03/04/1988"));
 
-        mockMvc.perform(put("/users/{id}", 1)
+        mockMvc.perform(put("/api/v1/users/{id}", 1)
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(userRequest)))
                 .andExpect(status().isOk());
@@ -84,7 +84,7 @@ class UserRestControllerTest {
                 .setName("Xavi")
                 .setBirthdate(DateUtils.parse("03/04/1988"));
 
-        mockMvc.perform(put("/users/{id}", 1)
+        mockMvc.perform(put("/api/v1/users/{id}", 1)
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(userRequest)))
                 .andExpect(status().isNotFound());
@@ -92,20 +92,20 @@ class UserRestControllerTest {
 
     @Test
     void whenDeleteOnCollection_thenMethodIsNotAllowed() throws Exception {
-        mockMvc.perform(delete("/users"))
+        mockMvc.perform(delete("/api/v1/users"))
                 .andExpect(status().isMethodNotAllowed());
     }
 
     @Test
     void whenDeleteAnUserThatExists_thenIsOk() throws Exception {
-        mockMvc.perform(delete("/users/{id}", 1))
+        mockMvc.perform(delete("/api/v1/users/{id}", 1))
                 .andExpect(status().isOk());
     }
 
     @Test
     void whenDeleteAnUserThatNotExists_thenIsNotFound() throws Exception {
         doThrow(EmptyResultDataAccessException.class).when(userService).delete(isA(Integer.class));
-        mockMvc.perform(delete("/users/{id}", 1))
+        mockMvc.perform(delete("/api/v1/users/{id}", 1))
                 .andExpect(status().isNotFound());
     }
 

@@ -1,6 +1,6 @@
 package es.xgani.firstSpringApp.controller.resourceAssembler;
 
-import es.xgani.firstSpringApp.controller.api.UserRestController;
+import es.xgani.firstSpringApp.controller.api.v1.UserRestController;
 import es.xgani.firstSpringApp.dto.model.UserDto;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;

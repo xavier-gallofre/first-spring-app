@@ -1,4 +1,4 @@
-package es.xgani.firstSpringApp.controller.api;
+package es.xgani.firstSpringApp.controller.api.v1;
 
 import es.xgani.firstSpringApp.controller.request.UserRequest;
 import es.xgani.firstSpringApp.controller.resourceAssembler.UserResourceAssembler;
@@ -15,6 +15,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping(path = "/api/v1")
 public class UserRestController {
 
     private final UserService userService;
