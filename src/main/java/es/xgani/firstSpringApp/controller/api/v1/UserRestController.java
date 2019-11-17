@@ -2,6 +2,7 @@ package es.xgani.firstSpringApp.controller.api.v1;
 
 import es.xgani.firstSpringApp.controller.request.UserRequest;
 import es.xgani.firstSpringApp.controller.resourceAssembler.UserResourceAssembler;
+import es.xgani.firstSpringApp.dto.mapper.UserMapper;
 import es.xgani.firstSpringApp.dto.model.UserDto;
 import es.xgani.firstSpringApp.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -37,20 +38,14 @@ public class UserRestController {
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
     public EntityModel<UserDto> create(@Valid @RequestBody UserRequest userRequest) {
-        UserDto userDto = new UserDto()
-                .setName(userRequest.getName())
-                .setBirthdate(userRequest.getBirthdate());
-
+        UserDto userDto = UserMapper.toUserDto(userRequest);
         UserDto user = userService.create(userDto);
         return assembler.toModel(user);
     }
 
     @PutMapping("/users/{id}")
     public EntityModel<UserDto> replace(@PathVariable Integer id, @Valid @RequestBody UserRequest userRequest) {
-        UserDto userDto = new UserDto()
-                .setName(userRequest.getName())
-                .setBirthdate(userRequest.getBirthdate());
-
+        UserDto userDto = UserMapper.toUserDto(userRequest);
         UserDto user = userService.replace(id, userDto);
         return assembler.toModel(user);
     }
